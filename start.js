@@ -53,4 +53,22 @@ getNewQuestions = () => {
     const number = choice.dataset["number"];
     choice.innerText = currentQuestion["choice" + number];
   });
+
+  avaibleQuestions.splice(questionIndex, 1);
+  console.log(avaibleQuestions);
+  acceptingAnswer = true;
 };
+
+choices.forEach((choice) => {
+  choice.addEventListener("click", (e) => {
+    if (!acceptingAnswer) return;
+
+    acceptingAnswer = false;
+    const selectedChoice = e.target;
+    const selectedAnswer = selectedChoice.dataset["number"];
+    console.log(selectedAnswer);
+    getNewQuestions();
+  });
+});
+
+startQuiz();
