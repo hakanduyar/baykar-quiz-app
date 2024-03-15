@@ -39,12 +39,11 @@ const MAX_QUESTIONS = 3;
 startQuiz = () => {
   questionCounter = 0;
   avaibleQuestions = [...questions];
-  console.log(avaibleQuestions);
   getNewQuestions();
 };
 
 getNewQuestions = () => {
-  if (avaibleQuestions.length == 0 || questionCounter >= MAX_QUESTIONS) {
+  if (avaibleQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     //go to end page
     return window.location.assign("/end.html");
   }
@@ -60,7 +59,6 @@ getNewQuestions = () => {
   });
 
   avaibleQuestions.splice(questionIndex, 1);
-  console.log(avaibleQuestions);
   acceptingAnswer = true;
 };
 
@@ -71,7 +69,8 @@ choices.forEach((choice) => {
     acceptingAnswer = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
-    console.log(selectedAnswer);
+
+    console.log(selectedAnswer == currentQuestion.answer);
     getNewQuestions();
   });
 });
