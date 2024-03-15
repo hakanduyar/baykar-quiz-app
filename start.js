@@ -44,6 +44,11 @@ startQuiz = () => {
 };
 
 getNewQuestions = () => {
+  if (avaibleQuestions.length == 0 || questionCounter >= MAX_QUESTIONS) {
+    //go to end page
+    return window.location.assign("/end.html");
+  }
+
   questionCounter++;
   const questionIndex = Math.floor(Math.random() * avaibleQuestions.length);
   currentQuestion = avaibleQuestions[questionIndex];
