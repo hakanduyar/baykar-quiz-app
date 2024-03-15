@@ -72,9 +72,13 @@ choices.forEach((choice) => {
 
     const classToApply =
       selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
-    console.log(classToApply);
 
-    getNewQuestions();
+    selectedChoice.parentElement.classList.add(classToApply);
+
+    setTimeout(() => {
+      selectedChoice.parentElement.classList.remove(classToApply);
+      getNewQuestions();
+    }, 1000);
   });
 });
 
