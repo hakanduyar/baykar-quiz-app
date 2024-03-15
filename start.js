@@ -33,3 +33,12 @@ let questions = [
     answer: 4,
   },
 ];
+
+const MAX_QUESTIONS = 3;
+
+startQuiz = () => {
+  questionCounter = 0;
+  avaibleQuestions = [...questions];
+  console.log(avaibleQuestions);
+  getNewQuestions();
+};
