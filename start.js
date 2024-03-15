@@ -70,7 +70,10 @@ choices.forEach((choice) => {
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
 
-    console.log(selectedAnswer == currentQuestion.answer);
+    const classToApply =
+      selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+    console.log(classToApply);
+
     getNewQuestions();
   });
 });
