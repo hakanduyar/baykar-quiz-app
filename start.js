@@ -72,6 +72,8 @@ getNewQuestions = () => {
     return window.location.assign("/end.html");
   }
 
+  initial();
+
   questionCounter++;
   questionCounterText.innerText = `${questionCounter}/${MAX_QUESTIONS}`;
 
