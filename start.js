@@ -6,7 +6,10 @@ const timeText = document.getElementById("time");
 let currentQuestion = {};
 let acceptingAnswer = false;
 let questionCounter = 0;
-let avaibleQuestions = [];
+let availableQuestions = [];
+let timeLeft = document.getElementById("time");
+let count = 11;
+let countdown;
 
 let questions = [
   {
@@ -38,14 +41,33 @@ let questions = [
 
 const MAX_QUESTIONS = 3;
 
+//initial setup
+function initial() {
+  count = 11;
+  clearInterval(countdown);
+  timerDisplay();
+}
+
+const timerDisplay = () => {
+  countdown = setInterval(() => {
+    count--;
+    timeLeft.innerHTML = `${count}s`;
+    if (count == 0) {
+      clearInterval(countdown);
+      getNewQuestions();
+    }
+  }, 1000);
+};
+
 startQuiz = () => {
   questionCounter = 0;
-  avaibleQuestions = [...questions];
+  availableQuestions = [...questions];
+  initial();
   getNewQuestions();
 };
 
 getNewQuestions = () => {
-  if (avaibleQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+  if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     //go to end page
     return window.location.assign("/end.html");
   }
@@ -53,8 +75,8 @@ getNewQuestions = () => {
   questionCounter++;
   questionCounterText.innerText = `${questionCounter}/${MAX_QUESTIONS}`;
 
-  const questionIndex = Math.floor(Math.random() * avaibleQuestions.length);
-  currentQuestion = avaibleQuestions[questionIndex];
+  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+  currentQuestion = availableQuestions[questionIndex];
   question.innerText = currentQuestion.question;
 
   choices.forEach((choice) => {
@@ -62,7 +84,7 @@ getNewQuestions = () => {
     choice.innerText = currentQuestion["choice" + number];
   });
 
-  avaibleQuestions.splice(questionIndex, 1);
+  availableQuestions.splice(questionIndex, 1);
   acceptingAnswer = true;
 };
 
