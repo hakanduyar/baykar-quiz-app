@@ -11,7 +11,7 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 let timeLeft = document.getElementById("time");
-let count = 11;
+let count = 31;
 let countdown;
 
 let questions = [];
@@ -55,7 +55,7 @@ const MAX_QUESTIONS = 3;
 
 //initial setup
 function initial() {
-  count = 11;
+  count = 31;
   clearInterval(countdown);
   timerDisplay();
 }
