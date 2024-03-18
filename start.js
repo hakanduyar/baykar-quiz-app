@@ -2,6 +2,8 @@ const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-text"));
 const progressText = document.getElementById("progressText");
 const timeText = document.getElementById("time");
+const loader = document.getElementById("loader");
+const start = document.getElementById("start");
 const scoreText = document.getElementById("score");
 const progressBarFull = document.getElementById("progressBarFull");
 
@@ -51,12 +53,13 @@ fetch("https://jsonplaceholder.typicode.com/posts")
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
-const MAX_QUESTIONS = 3;
+const MAX_QUESTIONS = 10;
 
 //initial setup
 function initial() {
-  count = 31;
   clearInterval(countdown);
+  count = 30;
+  timeLeft.innerHTML = `${count}s`; // Her durumda doğrudan 30 saniye göster
   timerDisplay();
 }
 
@@ -64,7 +67,7 @@ const timerDisplay = () => {
   countdown = setInterval(() => {
     count--;
     timeLeft.innerHTML = `${count}s`;
-    if (count == 21) {
+    if (count == 20) {
       // 10 saniye bekletme süresi
       acceptingAnswer = true; // 10 saniye sonra seçeneklere tıklamayı kabul et
     }
@@ -81,6 +84,8 @@ startQuiz = () => {
   availableQuestions = [...questions];
   initial();
   getNewQuestions();
+  start.classList.remove("hidden");
+  loader.classList.add("hidden");
 };
 
 getNewQuestions = () => {
@@ -139,5 +144,3 @@ incrementScore = (num) => {
   score += num;
   scoreText.innerText = score;
 };
-
-console.log(score);
