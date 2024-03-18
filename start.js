@@ -14,33 +14,40 @@ let timeLeft = document.getElementById("time");
 let count = 11;
 let countdown;
 
-let questions = [
-  {
-    question: "Inside which HTML element do we put the JavaScript??",
-    choice1: "<script>",
-    choice2: "<javascript>",
-    choice3: "<js>",
-    choice4: "<scripting>",
-    answer: 1,
-  },
-  {
-    question:
-      "What is the correct syntax for referring to an external script called 'xxx.js'?",
-    choice1: "<script href='xxx.js'>",
-    choice2: "<script name='xxx.js'>",
-    choice3: "<script src='xxx.js'>",
-    choice4: "<script file='xxx.js'>",
-    answer: 3,
-  },
-  {
-    question: " How do you write 'Hello World' in an alert box?",
-    choice1: "msgBox('Hello World');",
-    choice2: "alertBox('Hello World');",
-    choice3: "msg('Hello World');",
-    choice4: "alert('Hello World');",
-    answer: 4,
-  },
-];
+let questions = [];
+
+fetch("https://jsonplaceholder.typicode.com/posts")
+  .then((res) => {
+    return res.json();
+  })
+  .then((loadedQuestions) => {
+    questions = loadedQuestions.map((loadedQuestion) => {
+      const formattedQuestion = {
+        question: loadedQuestion.title,
+      };
+
+      // "body" alanındaki metni seçeneklere ayırın
+      const answerChoices = loadedQuestion.body.split("\n");
+      answerChoices.forEach((choice, index) => {
+        // Her seçeneği "choiceX" olarak formatlayın
+        formattedQuestion["choice" + (index + 1)] = choice.trim();
+      });
+
+      // Eğer yeterli seçenek yoksa, eksik olanları "Choice not available" ile doldurun
+      for (let i = answerChoices.length; i < 4; i++) {
+        formattedQuestion["choice" + (i + 1)] = "Choice not available";
+      }
+
+      formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+
+      return formattedQuestion;
+    });
+
+    startQuiz();
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
@@ -130,5 +137,3 @@ incrementScore = (num) => {
 };
 
 console.log(score);
-
-startQuiz();
