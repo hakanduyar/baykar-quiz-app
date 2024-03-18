@@ -64,6 +64,10 @@ const timerDisplay = () => {
   countdown = setInterval(() => {
     count--;
     timeLeft.innerHTML = `${count}s`;
+    if (count == 21) {
+      // 10 saniye bekletme süresi
+      acceptingAnswer = true; // 10 saniye sonra seçeneklere tıklamayı kabul et
+    }
     if (count == 0) {
       clearInterval(countdown);
       getNewQuestions();
@@ -104,7 +108,7 @@ getNewQuestions = () => {
   });
 
   availableQuestions.splice(questionIndex, 1);
-  acceptingAnswer = true;
+  acceptingAnswer = false;
 };
 
 choices.forEach((choice) => {
