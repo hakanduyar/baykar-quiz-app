@@ -67,7 +67,7 @@ const timerDisplay = () => {
   countdown = setInterval(() => {
     count--;
     timeLeft.innerHTML = `${count}s`;
-    if (count == 29) {
+    if (count == 20) {
       // 10 saniye bekletme süresi
       acceptingAnswer = true; // 10 saniye sonra seçeneklere tıklamayı kabul et
     }
