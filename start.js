@@ -14,7 +14,6 @@ let availableQuestions = [];
 let timeLeft = document.getElementById("time");
 let count = 31;
 let countdown;
-let clickedChoices = [];
 
 let questions = [];
 
@@ -116,53 +115,6 @@ getNewQuestions = () => {
   acceptingAnswer = false;
 };
 
-// "end.js" dosyasında
-
-// Quiz bittiğinde çağırılacak olan fonksiyon
-function showSelectedChoices() {
-  // Kaydedilen seçimlerin bulunduğu tabloyu alın
-  const table = document.getElementById("selectedChoicesTable");
-
-  // Kaydedilen seçimlerin sayısını alın
-  const numOfChoices = clickedChoices.length;
-
-  // Her bir seçimi tabloya ekleyin
-  for (let i = 0; i < numOfChoices; i++) {
-    const row = table.insertRow(-1); // Yeni bir satır ekle
-
-    const questionCell = row.insertCell(0); // Soru numarası için hücre ekle
-    questionCell.innerHTML = i + 1; // Soru numarası, 1'den başlayarak
-
-    const selectedChoiceCell = row.insertCell(1); // Seçilen şık için hücre ekle
-    selectedChoiceCell.innerHTML = clickedChoices[i];
-  }
-}
-
-// "showSelectedChoices" fonksiyonunu çağırarak seçilen tüm şıkları "end" sayfasında gösterin
-showSelectedChoices();
-// "start.js" dosyasında
-
-// Quiz sırasında seçilen tüm şıkları ve karşılık gelen soru numaralarını kaydeden fonksiyon
-function saveSelectedChoices(question, selectedChoice) {
-  const table = document.getElementById("selectedChoicesTable");
-
-  // Tabloyu kontrol et
-  if (table) {
-    // Yeni bir satır oluştur
-    const row = table.insertRow(-1);
-
-    // Satıra hücreler ekle
-    const questionCell = row.insertCell(0);
-    const selectedChoiceCell = row.insertCell(1);
-
-    // Hücrelere içerik ekle
-    questionCell.textContent = question;
-    selectedChoiceCell.textContent = selectedChoice;
-  } else {
-    console.error("Table not found!"); // Tablo bulunamadı hatası
-  }
-}
-
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     if (!acceptingAnswer) return;
@@ -178,15 +130,6 @@ choices.forEach((choice) => {
       incrementScore(CORRECT_BONUS);
     }
 
-    // Seçilen şıkkı "A", "B", "C", "D" harflerine dönüştürün
-    const choiceLetters = ["A", "B", "C", "D"];
-    const selectedLetter = choiceLetters[selectedAnswer - 1];
-
-    clickedChoices.push(selectedLetter);
-    saveSelectedChoices(questionCounter, selectedLetter); // Seçilen şık ve soru numarasını kaydet
-
-    console.log(selectedLetter); // A, B, C, D olarak yazdırın
-
     selectedChoice.parentElement.classList.add(classToApply);
 
     setTimeout(() => {
@@ -195,3 +138,7 @@ choices.forEach((choice) => {
     }, 1000);
   });
 });
+incrementScore = (num) => {
+  score += num;
+  scoreText.innerText = score;
+};
